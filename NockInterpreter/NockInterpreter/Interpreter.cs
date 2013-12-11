@@ -170,12 +170,10 @@ namespace NockInterpreter
             else
             {
                 Cell c = (Cell)noun;
-                // if n1 isn't an atom, I assume we throw? This isn't defined in the spec. Confirmed by email. This spins forever.
+                // If n1 isn't an atom, I assume we throw? This isn't defined in the spec. Confirmed by John B by email. This spins forever.
                 if (Noun.IsCell(c.n1.ToString()))
-                {
                     throw new Exception("Axis must be an atom: " + c.ToString());
-                }
-                else // i'll just assume n1 is an atom here, tired of checking
+                else 
                 {
                     Atom a = (Atom)c.n1;
                     if (a.value == 1)
