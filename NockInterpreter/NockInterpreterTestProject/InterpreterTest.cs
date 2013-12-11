@@ -152,7 +152,30 @@ namespace NockInterpreterTestProject
             program = "[42 [6 [1 1] [4 0 1] [1 233]]]";
             expected = "233";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); 
+            Assert.AreEqual(expected, actual.ToString());
+
+            // tests from https://groups.google.com/forum/#!topic/urbit-dev/K7QpBge30JI
+            program = "[10 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "55";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
+            program = "[42 [10 [0 [0 2]] [0 1]]]";
+            expected = "233";
+            try
+            {
+                actual = Interpreter.Nock(program);
+                Assert.Fail("This program should have thrown");
+            }
+            catch
+            {
+                Assert.IsTrue(true, "Correctly threw");
+            }
+
+            program = "[42 [8 [1 0] [8 [1 [6 [5 [0 7] [4 0 6]] [0 6] [9 2 [[0 2] [4 0 6] [0 7]]]]] [9 2 0 1]]]]";
+            expected = "41";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());       
         }
     }
 }
