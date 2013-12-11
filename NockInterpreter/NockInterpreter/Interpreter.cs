@@ -399,9 +399,7 @@ namespace NockInterpreter
                 value = i;
             }
             else
-            {
                 throw new ArgumentException("Invalid Atom: " + program);
-            }
             n1 = null;
             n2 = null;
         }
