@@ -176,6 +176,18 @@ namespace NockInterpreterTestProject
             expected = "41";
             actual = Interpreter.Nock(program);
             Assert.AreEqual(expected, actual.ToString());       
+
+            // my own tests
+            program = "10";
+            try
+            {
+                actual = Interpreter.Nock(program);
+                Assert.Fail("This program should have thrown");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual(e.Message, "Infinite loop nocking an atom: 10");
+            }
         }
     }
 }
