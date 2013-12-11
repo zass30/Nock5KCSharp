@@ -11,7 +11,7 @@ namespace NockInterpreter
         public static Noun Nock(Noun noun)
         {
             if (Atom.IsAtom(noun))
-                throw new Exception("infinite loop nocking an atom: " + noun.ToString());
+                throw new Exception("Infinite loop nocking an atom: " + noun.ToString());
             else
             {
                 Noun subject = noun.n1;
@@ -47,7 +47,7 @@ namespace NockInterpreter
                                     Noun d = operands.n2.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));    
                                 }
-                                throw new Exception("unhandled pattern for operand 6");
+                                throw new Exception("Unhandled pattern for operand 6");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
                                 if (Noun.IsCell(operands))
                                 {
@@ -97,7 +97,7 @@ namespace NockInterpreter
                         return Noun.CreateNoun(Nock(subject, formula.n1), Nock(subject, formula.n2));
                 }
             }
-            throw new Exception("unhandled pattern");
+            throw new Exception("Unhandled pattern");
         }
 
         public static Noun Nock(string program)
@@ -116,7 +116,7 @@ namespace NockInterpreter
         {
             if (Noun.IsAtom(noun.ToString()))
             {
-                throw new Exception("infinite loop tising an atom: " + noun.ToString());
+                throw new Exception("Infinite loop tising an atom: " + noun.ToString());
             }
             else
             {
@@ -139,7 +139,7 @@ namespace NockInterpreter
             }
             else
             {
-                throw new Exception("infinite loop lusing a cell: " + noun.ToString());
+                throw new Exception("Infinite loop lusing a cell: " + noun.ToString());
             }
         }
 
@@ -165,7 +165,7 @@ namespace NockInterpreter
         {
             if (Noun.IsAtom(noun.ToString()))
             {
-                throw new Exception("infinite loop fasing an atom: " + noun.ToString());
+                throw new Exception("Infinite loop fasing an atom: " + noun.ToString());
             }
             else
             {
@@ -173,7 +173,7 @@ namespace NockInterpreter
                 // if n1 isn't an atom, I assume we throw? This isn't defined in the spec. Confirmed by email. This spins forever.
                 if (Noun.IsCell(c.n1.ToString()))
                 {
-                    throw new Exception("axis must be an atom: " + c.ToString());
+                    throw new Exception("Axis must be an atom: " + c.ToString());
                 }
                 else // i'll just assume n1 is an atom here, tired of checking
                 {
@@ -251,11 +251,11 @@ namespace NockInterpreter
                 }
                 else
                 {
-                    throw new Exception("invalid char in cell: " + c);
+                    throw new Exception("Invalid char in cell: " + c);
                 }
                 i++;
             }
-            throw new Exception("invalid cell: " + program);
+            throw new Exception("Invalid cell: " + program);
         }
 
         public static bool IsCell(string program)
