@@ -115,9 +115,7 @@ namespace NockInterpreter
         private static Noun tis(Noun noun)
         {
             if (Noun.IsAtom(noun.ToString()))
-            {
                 throw new Exception("Infinite loop tising an atom: " + noun.ToString());
-            }
             else
             {
                 Cell cell = (Cell)noun;                
@@ -138,21 +136,15 @@ namespace NockInterpreter
                 return Noun.CreateNoun(v.ToString());
             }
             else
-            {
                 throw new Exception("Infinite loop lusing a cell: " + noun.ToString());
-            }
         }
 
         private static Noun wut(Noun noun)
         {
             if (Noun.IsAtom(noun.ToString()))
-            {
                 return Noun.CreateNoun("1");
-            }
             else
-            {
                 return Noun.CreateNoun("0");
-            }
         }
 
         private static Noun fas(Noun n1, Noun n2)
@@ -164,9 +156,7 @@ namespace NockInterpreter
         private static Noun fas(Noun noun)
         {
             if (Noun.IsAtom(noun.ToString()))
-            {
                 throw new Exception("Infinite loop fasing an atom: " + noun.ToString());
-            }
             else
             {
                 Cell c = (Cell)noun;
@@ -248,9 +238,7 @@ namespace NockInterpreter
                     }
                 }
                 else
-                {
                     throw new Exception("Invalid char in cell: " + c);
-                }
                 i++;
             }
             throw new Exception("Invalid cell: " + program);
@@ -367,15 +355,9 @@ namespace NockInterpreter
         public static Noun CreateNoun(string program)
         {
             if (IsAtom(program))
-            {
-                Atom atom = new Atom(program);
-                return atom;
-            }
+                return new Atom(program);
             else
-            {
-                Cell cell = new Cell(program);
-                return cell;
-            }
+                return new Cell(program);
         }
 
         public static Noun CreateNoun(Noun n1, Noun n2)
@@ -441,9 +423,7 @@ namespace NockInterpreter
                 n2 = CreateNoun(split.Item2);
             }
             else
-            {
                 throw new ArgumentException("Invalid Cell: " + program);
-            }
         }
     }
 }
