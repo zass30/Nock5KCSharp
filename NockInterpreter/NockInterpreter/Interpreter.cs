@@ -96,7 +96,7 @@ namespace NockInterpreter
                         }
                     }
                     else // 23 ::    *[a [b c] d]     [*[a b c] *[a d]]
-                        return Nock(Nock(subject, formula.n1), Nock(subject, formula.n2));
+                        return Noun.CreateNoun(Nock(subject, formula.n1), Nock(subject, formula.n2));
                 }
             }
             throw new Exception("unhandled pattern");

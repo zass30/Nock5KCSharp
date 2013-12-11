@@ -119,10 +119,10 @@ namespace NockInterpreterTestProject
             actual = Interpreter.Nock(program);
             Assert.AreEqual(expected, actual.ToString());
 
-/*            program = "[42 [[4 0 1] [3 0 1]]]";
+            program = "[42 [[4 0 1] [3 0 1]]]";
             expected = "[43 1]";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
+            Assert.AreEqual(expected, actual.ToString()); 
 
             program = "[[132 19] [10 37 [4 0 3]]]";
             expected = "20";
