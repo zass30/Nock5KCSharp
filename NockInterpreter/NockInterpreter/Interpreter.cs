@@ -11,9 +11,7 @@ namespace NockInterpreter
         public static Noun Nock(Noun noun)
         {
             if (Atom.IsAtom(noun))
-            {
                 throw new Exception("infinite loop nocking an atom: " + noun.ToString());
-            }
             else
             {
                 Noun subject = noun.n1;
@@ -450,5 +448,4 @@ namespace NockInterpreter
             }
         }
     }
-
 }
