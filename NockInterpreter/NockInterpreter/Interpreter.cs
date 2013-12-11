@@ -57,7 +57,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
                                 }
-                                throw new Exception("unha ndled pattern");
+                                throw new Exception("unhandled pattern");
                             case 8: // 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
                                 if (Noun.IsCell(operands))
                                 {
