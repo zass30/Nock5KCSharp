@@ -129,32 +129,30 @@ namespace NockInterpreterTestProject
             actual = Interpreter.Nock(program);
             Assert.AreEqual(expected, actual.ToString());
 
-/*            program = "[42 [8 [4 0 1] [0 1]]]";
+            program = "[42 [7 [4 0 1] [4 0 1]]]";
             expected = "44";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
+            Assert.AreEqual(expected, actual.ToString()); 
 
-/*            program = "[42 [8 [4 0 1] [0 1]]]";
+            program = "[42 [8 [4 0 1] [0 1]]]";
             expected = "[43 42]";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
+            Assert.AreEqual(expected, actual.ToString()); 
 
-/*            program = "[42 [8 [4 0 1] [4 0 3]]]";
+            program = "[42 [8 [4 0 1] [4 0 3]]]";
             expected = "43";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
+            Assert.AreEqual(expected, actual.ToString()); 
 
-/*            program = "[42 [6 [1 0 [4 0 1] [1 233]]]]";
+            program = "[42 [6 [1 0] [4 0 1] [1 233]]]";
             expected = "43";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
+            Assert.AreEqual(expected, actual.ToString()); 
 
-/*            program = "[42 [6 [1 1 [4 0 1] [1 233]]]]";
+            program = "[42 [6 [1 1] [4 0 1] [1 233]]]";
             expected = "233";
             actual = Interpreter.Nock(program);
-            Assert.AreEqual(expected, actual.ToString()); */
-
-
+            Assert.AreEqual(expected, actual.ToString()); 
         }
     }
 }

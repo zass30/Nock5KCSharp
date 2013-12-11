@@ -47,7 +47,7 @@ namespace NockInterpreter
                                     Noun b = operands.n1;
                                     Noun c = operands.n2.n1;
                                     Noun d = operands.n2.n2;
-                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [ 1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));    
+                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));    
                                 }
                                 throw new Exception("unhandled pattern");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
