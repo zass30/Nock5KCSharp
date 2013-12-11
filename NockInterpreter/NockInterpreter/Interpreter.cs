@@ -30,9 +30,9 @@ namespace NockInterpreter
                             case 1: // 26 ::    *[a 1 b]         b
                                 return operands;
                             case 2: // 27 ::    *[a 2 b c]       *[*[a b] *[a c]]
-                                if (Noun.IsAtom(operands))
-                                    throw new Exception("Atom after operand 2: " + operands.ToString());
-                                return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
+                                if (Noun.IsCell(operands))
+                                    return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
+                                throw new Exception("Atom after operand 2: " + operands.ToString());
                             case 3: // 28 ::    *[a 3 b]         ?*[a b]
                                 return wut(Nock(subject, operands));
                             case 4: // 29 ::    *[a 4 b]         +*[a b]
@@ -47,7 +47,7 @@ namespace NockInterpreter
                                     Noun d = operands.n2.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));    
                                 }
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("unhandled pattern for operand 6");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
                                 if (Noun.IsCell(operands))
                                 {
@@ -55,7 +55,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
                                 }
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("Atom after operand 7: " + operands.ToString());
                             case 8: // 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
                                 if (Noun.IsCell(operands))
                                 {
@@ -63,7 +63,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]"));
                                 }
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("Atom after operand 8: " + operands.ToString());
                             case 9: // 35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
                                 if (Noun.IsCell(operands))
                                 {
@@ -71,7 +71,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     return Nock(Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]"));
                                 }
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("Atom after operand 9: " + operands.ToString());
                             case 10: 
                                 if (Noun.IsCell(operands))
                                 {
@@ -88,9 +88,9 @@ namespace NockInterpreter
                                         return Nock(subject, c);
                                     }
                                 }
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("Atom after operand 10: " + operands.ToString());
                             default:
-                                throw new Exception("unhandled pattern");
+                                throw new Exception("Unknown operand: " + op.value);
                         }
                     }
                     else // 23 ::    *[a [b c] d]     [*[a b c] *[a d]]
