@@ -10,6 +10,7 @@ namespace NockInterpreter
     {
         public static Noun Nock(Noun noun)
         {
+        Start:
             if (Atom.IsAtom(noun))
                 throw new Exception("Infinite loop nocking an atom: " + noun.ToString());
             else
@@ -31,7 +32,13 @@ namespace NockInterpreter
                                 return operands;
                             case 2: // 27 ::    *[a 2 b c]       *[*[a b] *[a c]]
                                 if (Noun.IsCell(operands))
-                                    return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
+                                {
+                                    Noun a = Nock(subject, operands.n1);
+                                    Noun b = Nock(subject, operands.n2);
+                                    noun = Noun.CreateNoun(a, b);
+                                    goto Start;
+                                    //                                    return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
+                                }
                                 throw new Exception("Atom after operand 2: " + operands.ToString());
                             case 3: // 28 ::    *[a 3 b]         ?*[a b]
                                 return wut(Nock(subject, operands));
@@ -45,7 +52,9 @@ namespace NockInterpreter
                                     Noun b = operands.n1;
                                     Noun c = operands.n2.n1;
                                     Noun d = operands.n2.n2;
-                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));    
+                                    noun = Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]");
+                                    goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));
                                 }
                                 throw new Exception("Unhandled pattern for operand 6");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
@@ -53,7 +62,9 @@ namespace NockInterpreter
                                 {
                                     Noun b = operands.n1;
                                     Noun c = operands.n2;
-                                    return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
+                                    noun = Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]");
+                                    goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 7: " + operands.ToString());
                             case 8: // 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
@@ -61,7 +72,9 @@ namespace NockInterpreter
                                 {
                                     Noun b = operands.n1;
                                     Noun c = operands.n2;
-                                    return Nock(Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]"));
+                                    noun = Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]");
+                                    goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 8: " + operands.ToString());
                             case 9: // 35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
@@ -69,10 +82,12 @@ namespace NockInterpreter
                                 {
                                     Noun b = operands.n1;
                                     Noun c = operands.n2;
-                                    return Nock(Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]"));
+                                    noun = Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]");
+                                    goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]"));
                                 }
                                 throw new Exception("Atom after operand 9: " + operands.ToString());
-                            case 10: 
+                            case 10:
                                 if (Noun.IsCell(operands))
                                 {
                                     if (Noun.IsCell(operands.n1)) // 36 ::    *[a 10 [b c] d]  *[a 8 c 7 [0 3] d]
@@ -80,12 +95,16 @@ namespace NockInterpreter
                                         Noun b = operands.n1.n1;
                                         Noun c = operands.n1.n2;
                                         Noun d = operands.n2;
-                                        return Nock(Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]"));
+                                        noun = Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]");
+                                        goto Start;
+                                        //                                        return Nock(Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]"));
                                     }
                                     else // 37 ::    *[a 10 b c]      *[a c]
                                     {
                                         Noun c = operands.n2;
-                                        return Nock(subject, c);
+                                        noun = Noun.CreateNoun(subject, c);
+                                        goto Start;
+                                        //                                        return Nock(subject, c);
                                     }
                                 }
                                 throw new Exception("Atom after operand 10: " + operands.ToString());
@@ -111,14 +130,14 @@ namespace NockInterpreter
             Noun noun = Noun.CreateNoun(n1, n2);
             return Nock(noun);
         }
-        
+
         private static Noun tis(Noun noun)
         {
             if (Noun.IsAtom(noun.ToString()))
                 throw new Exception("Infinite loop tising an atom: " + noun.ToString());
             else
             {
-                Cell cell = (Cell)noun;                
+                Cell cell = (Cell)noun;
 
                 if (cell.n1.ToString() == cell.n2.ToString())
                     return Noun.CreateNoun("0");
@@ -163,7 +182,7 @@ namespace NockInterpreter
                 // If n1 isn't an atom, I assume we throw? This isn't defined in the spec. Confirmed by John B by email. This spins forever.
                 if (Noun.IsCell(c.n1.ToString()))
                     throw new Exception("Axis must be an atom: " + c.ToString());
-                else 
+                else
                 {
                     Atom a = (Atom)c.n1;
                     if (a.value == 1)
@@ -195,7 +214,7 @@ namespace NockInterpreter
                             {
                                 throw new Exception("Infinite loop somewhere in fasing: " + c.n2.ToString());
                             }
-                        }                      
+                        }
                     }
                 }
                 throw new Exception("Infinite loop somewhere in fasing: " + c.n2.ToString());
@@ -209,7 +228,8 @@ namespace NockInterpreter
         public Noun n2;
 
         // takes a program, returns a pair of nouns, stringified.
-        public static Tuple<string, string> SplitCell(string program){
+        public static Tuple<string, string> SplitCell(string program)
+        {
 
             int stackCount = 0;
             int i = 0;
@@ -225,8 +245,9 @@ namespace NockInterpreter
                     else if (c == ' ')
                     {
                         // if we see a space, and our stack count is at 1, then we've found our split point
-                        if (stackCount == 1){
-                            string a = program.Substring(1,i - 1);
+                        if (stackCount == 1)
+                        {
+                            string a = program.Substring(1, i - 1);
                             string b = program.Substring(i + 1, program.Length - (i + 2));
 
                             // to implement proper bracket closing, surround b with brackets if it isn't a cell and isn't an atom
@@ -258,7 +279,7 @@ namespace NockInterpreter
 
             int i = 0; // i is the stack count for brackets. 
             int counter = 0;
-            char s ='\0'; // s is the last seen character
+            char s = '\0'; // s is the last seen character
             // split the string right after the first space
             foreach (char c in program)
             {
@@ -300,7 +321,7 @@ namespace NockInterpreter
             // We should end with stack count of zero
             if (i == 0)
                 return true;
-            else 
+            else
                 return false;
         }
 
@@ -332,7 +353,8 @@ namespace NockInterpreter
                 return false;
         }
 
-        public static bool IsAtom(string program){
+        public static bool IsAtom(string program)
+        {
             int i = 0;
             if (int.TryParse(program, out i))
             {

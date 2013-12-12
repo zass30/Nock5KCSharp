@@ -160,6 +160,35 @@ namespace NockInterpreterTestProject
             actual = Interpreter.Nock(program);
             Assert.AreEqual(expected, actual.ToString());
 
+
+
+/*
+            program = "[13 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "233";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
+            program = "[13 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "233";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
+            program = "[13 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "233";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
+            program = "[13 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "233";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
+            program = "[13 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "233";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+*/
+
             program = "[42 [10 [0 [0 2]] [0 1]]]";
             expected = "233";
             try
@@ -188,6 +217,13 @@ namespace NockInterpreterTestProject
             {
                 Assert.AreEqual(e.Message, "Infinite loop nocking an atom: 10");
             }
+
+            // fib 16 should stack overflow unless tail call elimination is implemented
+            program = "[18 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "2584";
+            actual = Interpreter.Nock(program);
+            Assert.AreEqual(expected, actual.ToString());
+
         }
     }
 }
