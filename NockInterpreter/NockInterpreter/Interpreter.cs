@@ -8,9 +8,17 @@ namespace NockInterpreter
 {
     class Interpreter
     {
+        static Dictionary<string, Noun> memocache = new Dictionary<string, Noun>();
+
         public static Noun Nock(Noun noun)
         {
         Start:
+            Noun cache_noun;
+            if (memocache.TryGetValue(noun.ToString(), out cache_noun))
+            {
+                return cache_noun;
+            }
+
             if (Atom.IsAtom(noun))
                 throw new Exception("Infinite loop nocking an atom: " + noun.ToString());
             else
@@ -27,9 +35,11 @@ namespace NockInterpreter
                         switch (op.value)
                         {
                             case 0: // 25 ::    *[a 0 b]         /[b a]
-                                return fas(operands, subject);
+                                memocache[noun.ToString()] = fas(operands, subject);
+                                return memocache[noun.ToString()];
                             case 1: // 26 ::    *[a 1 b]         b
-                                return operands;
+                                memocache[noun.ToString()] = operands;
+                                return memocache[noun.ToString()];
                             case 2: // 27 ::    *[a 2 b c]       *[*[a b] *[a c]]
                                 if (Noun.IsCell(operands))
                                 {
@@ -37,14 +47,18 @@ namespace NockInterpreter
                                     Noun b = Nock(subject, operands.n2);
                                     noun = Noun.CreateNoun(a, b);
                                     goto Start;
+                                    //                                    return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
                                 }
                                 throw new Exception("Atom after operand 2: " + operands.ToString());
                             case 3: // 28 ::    *[a 3 b]         ?*[a b]
-                                return wut(Nock(subject, operands));
+                                memocache[noun.ToString()] = wut(Nock(subject, operands));
+                                return memocache[noun.ToString()];
                             case 4: // 29 ::    *[a 4 b]         +*[a b]
-                                return lus(Nock(subject, operands));
+                                memocache[noun.ToString()] = lus(Nock(subject, operands));
+                                return memocache[noun.ToString()];
                             case 5: // 30 ::    *[a 5 b]         =*[a b]
-                                return tis(Nock(subject, operands));
+                                memocache[noun.ToString()] = tis(Nock(subject, operands));
+                                return memocache[noun.ToString()];
                             case 6: // 32 ::    *[a 6 b c d]     *[a 2 [0 1] 2 [1 c d] [1 0] 2 [1 2 3] [1 0] 4 4 b]
                                 if (Noun.IsCell(operands) && Noun.IsCell(operands.n2))
                                 {
@@ -53,6 +67,7 @@ namespace NockInterpreter
                                     Noun d = operands.n2.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]");
                                     goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));
                                 }
                                 throw new Exception("Unhandled pattern for operand 6");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
@@ -62,6 +77,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]");
                                     goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 7: " + operands.ToString());
                             case 8: // 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
@@ -71,6 +87,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]");
                                     goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 8: " + operands.ToString());
                             case 9: // 35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
@@ -80,6 +97,7 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]");
                                     goto Start;
+                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]"));
                                 }
                                 throw new Exception("Atom after operand 9: " + operands.ToString());
                             case 10:
@@ -92,12 +110,14 @@ namespace NockInterpreter
                                         Noun d = operands.n2;
                                         noun = Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]");
                                         goto Start;
+                                        //                                        return Nock(Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]"));
                                     }
                                     else // 37 ::    *[a 10 b c]      *[a c]
                                     {
                                         Noun c = operands.n2;
                                         noun = Noun.CreateNoun(subject, c);
                                         goto Start;
+                                        //                                        return Nock(subject, c);
                                     }
                                 }
                                 throw new Exception("Atom after operand 10: " + operands.ToString());
@@ -106,7 +126,10 @@ namespace NockInterpreter
                         }
                     }
                     else // 23 ::    *[a [b c] d]     [*[a b c] *[a d]]
-                        return Noun.CreateNoun(Nock(subject, formula.n1), Nock(subject, formula.n2));
+                    {
+                        memocache[noun.ToString()] = Noun.CreateNoun(Nock(subject, formula.n1), Nock(subject, formula.n2));
+                        return memocache[noun.ToString()];
+                    }
                 }
             }
             throw new Exception("Unhandled pattern");
