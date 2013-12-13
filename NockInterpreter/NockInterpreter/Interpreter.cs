@@ -37,7 +37,6 @@ namespace NockInterpreter
                                     Noun b = Nock(subject, operands.n2);
                                     noun = Noun.CreateNoun(a, b);
                                     goto Start;
-                                    //                                    return Nock(Nock(subject, operands.n1), Nock(subject, operands.n2));
                                 }
                                 throw new Exception("Atom after operand 2: " + operands.ToString());
                             case 3: // 28 ::    *[a 3 b]         ?*[a b]
@@ -54,7 +53,6 @@ namespace NockInterpreter
                                     Noun d = operands.n2.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]");
                                     goto Start;
-                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 [0 1] 2 [1 " + c + " " + d + "] [1 0] 2 [1 2 3] [1 0] 4 4 " + b + "]"));
                                 }
                                 throw new Exception("Unhandled pattern for operand 6");
                             case 7: // 33 ::    *[a 7 b c]       *[a 2 b 1 c]
@@ -64,7 +62,6 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]");
                                     goto Start;
-                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 2 " + b + " 1 " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 7: " + operands.ToString());
                             case 8: // 34 ::    *[a 8 b c]       *[a 7 [[7 [0 1] b] 0 1] c]
@@ -74,7 +71,6 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]");
                                     goto Start;
-                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 [[7 [0 1] " + b + "] 0 1] " + c + "]"));
                                 }
                                 throw new Exception("Atom after operand 8: " + operands.ToString());
                             case 9: // 35 ::    *[a 9 b c]       *[a 7 c 2 [0 1] 0 b]
@@ -84,7 +80,6 @@ namespace NockInterpreter
                                     Noun c = operands.n2;
                                     noun = Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]");
                                     goto Start;
-                                    //                                    return Nock(Noun.CreateNoun("[" + subject + " 7 " + c + " 2 [0 1] 0 " + b + "]"));
                                 }
                                 throw new Exception("Atom after operand 9: " + operands.ToString());
                             case 10:
@@ -97,14 +92,12 @@ namespace NockInterpreter
                                         Noun d = operands.n2;
                                         noun = Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]");
                                         goto Start;
-                                        //                                        return Nock(Noun.CreateNoun("[" + subject + " 8 " + c + " 7 [0 3] " + d + "]"));
                                     }
                                     else // 37 ::    *[a 10 b c]      *[a c]
                                     {
                                         Noun c = operands.n2;
                                         noun = Noun.CreateNoun(subject, c);
                                         goto Start;
-                                        //                                        return Nock(subject, c);
                                     }
                                 }
                                 throw new Exception("Atom after operand 10: " + operands.ToString());

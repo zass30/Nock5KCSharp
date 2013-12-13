@@ -219,8 +219,8 @@ namespace NockInterpreterTestProject
             }
 
             // fib 16 should stack overflow unless tail call elimination is implemented
-            program = "[18 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
-            expected = "2584";
+            program = "[16 [8 [1 [1 1]] [8 [1 0] [8 [1 [6 [5 [0 15] [4 0 6]] [0 28] [9 2 [[0 2] [4 0 6] [[0 29] [7 [0 14] [8 [1 0] [8 [1 [6 [5 [0 14] [0 6]] [0 15] [9 2 [[0 2] [4 0 6] [0 14] [4 0 15]]]]] [9 2 0 1]]]]] [0 15]]]]] [9 2 0 1]]]]]";
+            expected = "987";
             actual = Interpreter.Nock(program);
             Assert.AreEqual(expected, actual.ToString());
 
